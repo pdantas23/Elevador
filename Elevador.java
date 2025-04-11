@@ -1,75 +1,61 @@
-class Elevador {
-    int pessoasEmbarcadas;
-    int quantidadeDePessoasFila;
-    int capacidade;
-    int andarAtual;
-    int gastoDeEnergia;
-    boolean emMovimento;
-    boolean lotado;
-    double tempoChegada;
-    Predio predio;
+public class Elevador extends EntidadeSimulavel {
+    private int id;
+    private int capacidade;
+    private int andarAtual;
+    private boolean emMovimento;
+    private boolean lotado;
+    private double tempoChegada;
+    private int gastoDeEnergia;
+    private int pessoasEmbarcadas;
 
-    public int getandarAtual() {
+    public Elevador(int id) {
+        this.id = id;
+        this.capacidade = 4;
+        this.andarAtual = 0;
+        this.emMovimento = false;
+        this.lotado = false;
+        this.tempoChegada = 10;
+        this.gastoDeEnergia = 0;
+        this.pessoasEmbarcadas = 0;
+    }
+
+    public Elevador(int id, int capacidade, double tempoChegada) {
+        this.id = id;
+        this.capacidade = capacidade;
+        this.andarAtual = 0;
+        this.emMovimento = false;
+        this.lotado = false;
+        this.tempoChegada = tempoChegada;
+        this.gastoDeEnergia = 0;
+        this.pessoasEmbarcadas = 0;
+    }
+
+    public int getAndarAtual() {
         return andarAtual;
     }
 
-    public void setandarAtual(int andarAtual) {
+    public void setAndarAtual(int andarAtual) {
         this.andarAtual = andarAtual;
     }
 
-    public Elevador(int capacidade, double tempoChegada, int quantidadeDePessoasFila, Predio predio) {
-        this.capacidade = capacidade;
-        andarAtual = 0;
-        emMovimento = false;
-        lotado = false;
-        this.tempoChegada = tempoChegada;
-        this.quantidadeDePessoasFila = quantidadeDePessoasFila;
-        this.gastoDeEnergia = 0;
-        pessoasEmbarcadas = 0;
-        this.predio = predio;
-    }
 
-    public void embarqueElevador() {
-
-        if (quantidadeDePessoasFila + pessoasEmbarcadas == capacidade) {
-            lotado = true;
-            System.out.println(pessoasEmbarcadas + " pessoas embarcaram. Elevador lotado.");
-            quantidadeDePessoasFila = 0;
-            return;
-        }
-
-        if (quantidadeDePessoasFila + pessoasEmbarcadas > capacidade) {
-            capacidade = capacidade - pessoasEmbarcadas;
-            pessoasEmbarcadas = capacidade;
-            lotado = true;
-            System.out.println((pessoasEmbarcadas) + " pessoas embarcaram. Elevador lotado. Espere o próximo.");
-            pessoasEmbarcadas = capacidade;
-            quantidadeDePessoasFila = quantidadeDePessoasFila - pessoasEmbarcadas;
-
-        } else {
-            System.out.println("Há " + (capacidade - pessoasEmbarcadas) +" vagas restantes.");
-            pessoasEmbarcadas += quantidadeDePessoasFila;
-            quantidadeDePessoasFila = quantidadeDePessoasFila - pessoasEmbarcadas;
-            System.out.println(pessoasEmbarcadas + " pessoas embarcaram.");
-        }
-    }
     public void desembarqueElevador() {
-        System.out.println(pessoasEmbarcadas + " desembarcaram");
+        System.out.println(pessoasEmbarcadas + " pessoas desembarcaram.");
         pessoasEmbarcadas = 0;
+        lotado = false;
     }
 
-    public void elevadorEmMovimento() {
-            emMovimento = true;
-            gastoDeEnergia += pessoasEmbarcadas;
-            System.out.println("Elevador em movimento. Gasto de energia: " + gastoDeEnergia + " unidades.");
-
-            if(predio.horarioDePico == true){
-                gastoDeEnergia = 3;
-            }else{
-                gastoDeEnergia = 0;
-            }
-    }
     public void mostrarAndarAtual() {
-        System.out.println("Andar atual: " + getandarAtual());
+        System.out.println("Elevador " + id + " - Andar atual: " + getAndarAtual());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void atualizar(int minutoSimulado) {
+        System.out.println("Elevador " + id + " processando minuto " + minutoSimulado);
+        // Lógica de movimentação, embarque/desembarque pode ser colocada aqui futuramente
     }
 }

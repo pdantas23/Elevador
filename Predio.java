@@ -1,32 +1,24 @@
-import EstruturaDeDados.ListaEncadeadaSimples;
-
-public class Predio {
+public class Predio extends EntidadeSimulavel {
     int quantidadeAndares;
-    int quantidadeElevadores;
     boolean horarioDePico;
+
     CentralDeControle centralDeControle;
-    ListaEncadeadaSimples listaChegada;
+    ListaAndares listaAndares;
 
     public Predio(int quantidadeAndares, int quantidadeElevadores, boolean horarioDePico) {
         this.quantidadeAndares = quantidadeAndares;
-        this.quantidadeElevadores = quantidadeElevadores;
         this.horarioDePico = horarioDePico;
+
+        this.centralDeControle = new CentralDeControle(quantidadeElevadores);
+        this.listaAndares = new ListaAndares();
+
+        for (int i = 0; i < quantidadeAndares; i++) {
+            listaAndares.inserirFim(new Andar(i));
+        }
     }
 
-    public int getQuantidadeElevadores() {
-        return quantidadeElevadores;
+    @Override
+    public void atualizar(int minutoSimulado) {
+        centralDeControle.atualizar(minutoSimulado);
     }
-
-    public int getAndares() {
-        return quantidadeAndares;
-    }
-
-    public void quantidadeDeAndares(){
-        System.out.println("Quantidade de andares: " + getAndares());
-    }
-
-    public void quantidadeDeElevadores(){
-        System.out.println("Quantidade de elevadores: " + getQuantidadeElevadores());
-    }
-
 }
