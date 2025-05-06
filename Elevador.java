@@ -6,7 +6,9 @@ public class Elevador extends EntidadeSimulavel {
     private boolean lotado;
     private double tempoChegada;
     private int gastoDeEnergia;
+    private boolean subindo;
     private int pessoasEmbarcadas;
+    LisaPassageiros listaPassageiros;
 
     public Elevador(int id) {
         this.id = id;
@@ -51,6 +53,9 @@ public class Elevador extends EntidadeSimulavel {
 
     public int getId() {
         return id;
+    }
+    public boolean estaVazio() {
+        return passageiros == null || passageiros.getInicio() == null;
     }
 
     @Override

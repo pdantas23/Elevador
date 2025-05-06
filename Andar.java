@@ -2,7 +2,7 @@ import java.io.Serializable;
 
 public class Andar implements Serializable {
     int numero;
-    private Fila pessoasAguardando;
+    private FilaPessoas pessoasAguardando;
     private PainelElevador painel;
 
     Andar proximo;
@@ -10,7 +10,7 @@ public class Andar implements Serializable {
 
     public Andar(int numero) {
         this.numero = numero;
-        this.pessoasAguardando = new Fila();
+        this.pessoasAguardando = new FilaPessoas();
         this.painel = new PainelElevador();
         this.proximo = null;
         this.anterior = null;
@@ -20,7 +20,7 @@ public class Andar implements Serializable {
         return numero;
     }
 
-    public Fila getPessoasAguardando() {
+    public FilaPessoas getPessoasAguardando() {
         return pessoasAguardando;
     }
 
