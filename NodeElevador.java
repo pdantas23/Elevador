@@ -7,19 +7,13 @@ public class NodeElevador {
         this.proximo = null;
     }
 
+    //Retorna o nóElevador
     public Elevador getElevador() {
         return elevador;
     }
 
-    public void setElevador(Elevador elevador) {
-        this.elevador = elevador;
-    }
-
+    //Retorna o próximo do nóElevador
     public NodeElevador getProximo() {
         return proximo;
-    }
-
-    public void setProximo(NodeElevador proximo) {
-        this.proximo = proximo;
     }
 }

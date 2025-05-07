@@ -9,23 +9,22 @@ public class PainelElevador implements Serializable {
         this.botaoDescerAtivado = false;
     }
 
+    //Metodo subir - botão interno
     public void pressionarSubir() {
         botaoSubirAtivado = true;
     }
 
+    //Metodo descer - botão interno
     public void pressionarDescer() {
         botaoDescerAtivado = true;
     }
 
-    public void resetar() {
-        botaoSubirAtivado = false;
-        botaoDescerAtivado = false;
-    }
-
+    //Retorna se o botão subir foi ativado
     public boolean isBotaoSubirAtivado() {
         return botaoSubirAtivado;
     }
 
+    //Retorna se o botão descer foi ativado
     public boolean isBotaoDescerAtivado() {
         return botaoDescerAtivado;
     }

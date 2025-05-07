@@ -7,14 +7,17 @@ public class NodePessoa {
         this.proximo = null;
     }
 
+    //Retorna a Pessoa
     public Pessoa getPessoa() {
         return pessoa;
     }
 
+    //Retorna o próximo do nóPessoa
     public NodePessoa getProximo() {
         return proximo;
     }
 
+    //Determina o próximo do nóPessoa
     public void setProximo(NodePessoa proximo) {
         this.proximo = proximo;
     }

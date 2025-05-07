@@ -9,40 +9,7 @@ public class FilaPessoas {
         tamanho = 0;
     }
 
-    public void inserirComPrioridade(Pessoa pessoa) {
-        NodePessoa nova = new NodePessoa(pessoa);
-
-        // Caso a fila esteja vazia
-        if (inicio == null) {
-            inicio = fim = nova;
-        } else {
-            NodePessoa atual = inicio;
-            NodePessoa anterior = null;
-
-            // Encontra o local correto com base na prioridade
-            while (atual != null && pessoa.getPrioridade() <= atual.getPessoa().getPrioridade()) {
-                anterior = atual;
-                atual = atual.getProximo();
-            }
-
-            if (anterior == null) {
-                // Inserção no início
-                nova.setProximo(inicio);
-                inicio = nova;
-            } else {
-                // Inserção no meio ou fim
-                anterior.setProximo(nova);
-                nova.setProximo(atual);
-
-                if (atual == null) {
-                    fim = nova;
-                }
-            }
-        }
-
-        tamanho++;
-    }
-
+    //Embarque da pessoa com maior prioridade
     public NodePessoa removerPessoaComMaiorPrioridade() {
         if (inicio == null) return null;
 
@@ -55,25 +22,55 @@ public class FilaPessoas {
         return removido;
     }
 
-    public boolean estaVazia() {
-        return inicio == null;
-    }
-
-    public int tamanho() {
-        return tamanho;
-    }
-
+    //Retorna a primeira pessoa da fila
     public NodePessoa getInicio() {
         return inicio;
     }
 
-    public void imprimirFila() {
+    //Adiciona uma nova pessoa a fila
+    public void adicionarPessoa(Pessoa pessoa) {
+        NodePessoa novo = new NodePessoa(pessoa);
+
+        if (inicio == null) {
+            inicio = novo;
+            fim = novo;
+        } else {
+            NodePessoa atual = inicio;
+            NodePessoa anterior = null;
+
+            while (atual != null && atual.getPessoa().getPrioridade() >= pessoa.getPrioridade()) {
+                anterior = atual;
+                atual = atual.getProximo();
+            }
+
+            if (anterior == null) {
+                novo.setProximo(inicio);
+                inicio = novo;
+            } else {
+                anterior.setProximo(novo);
+                novo.setProximo(atual);
+
+                if (atual == null) {
+                    fim = novo;
+                }
+            }
+        }
+
+        tamanho++;
+
+    }
+
+    //Exibe a fila e cada integrante
+    public void exibirFila() {
+        if (inicio == null) {
+            System.out.println("A fila está vazia.");
+            return;
+        }
+
         NodePessoa atual = inicio;
         while (atual != null) {
-            Pessoa p = atual.getPessoa();
-            System.out.println("Pessoa " + p.getId() + " (Prioridade " + p.getPrioridade() +
-                    ", Destino " + p.getAndarDestino() + ")");
-            atual = atual.getProximo();
+            System.out.println("Pessoa ID: " + atual.getPessoa().getId() + " | Destino: " + atual.getPessoa().getAndarDestino() + " | Prioridade: " + atual.getPessoa().getPrioridade()); // Exibe as informações da pessoa
+            atual = atual.getProximo(); // Vai para o próximo nó
         }
     }
 }

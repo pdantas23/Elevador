@@ -1,15 +1,17 @@
 public class CentralDeControle extends EntidadeSimulavel {
     private ListaElevadores listaElevadores;
 
-    public CentralDeControle(int numElevadores) {
+    //Cria a lista de elevadores
+    public CentralDeControle() {
         listaElevadores = new ListaElevadores();
-
-        for (int i = 0; i < numElevadores; i++) {
-            Elevador e = new Elevador(i + 1); // ID começa em 1
-            listaElevadores.inserir(e);
-        }
     }
 
+    //Adiciona o elevador a lista de elevadores
+    public void adicionarElevador(Elevador elevador) {
+        listaElevadores.inserir(elevador);
+    }
+
+    //Atualiza o elevador atual na simulação
     @Override
     public void atualizar(int minutoSimulado) {
         NodeElevador atual = listaElevadores.getInicio();

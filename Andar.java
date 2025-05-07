@@ -1,21 +1,25 @@
-import java.io.Serializable;
-
-public class Andar implements Serializable {
-    int numero;
+public class Andar {
+    private int numero;
     private FilaPessoas pessoasAguardando;
     private PainelElevador painel;
+    public Andar proximo;
+    public Andar anterior;
 
-    Andar proximo;
-    Andar anterior;
-
+    //A fila é criada ao instanciar o andar
     public Andar(int numero) {
         this.numero = numero;
         this.pessoasAguardando = new FilaPessoas();
         this.painel = new PainelElevador();
         this.proximo = null;
         this.anterior = null;
+
+        for (int i = 0; i < 10; i++) {
+            Pessoa pessoa = Pessoa.gerarPessoaAleatoria(numero);
+            pessoasAguardando.adicionarPessoa(pessoa);
+        }
     }
 
+    // Getters e Setters
     public int getNumero() {
         return numero;
     }
@@ -32,20 +36,5 @@ public class Andar implements Serializable {
         return proximo;
     }
 
-    public void setProximo(Andar proximo) {
-        this.proximo = proximo;
-    }
-
-    public Andar getAnterior() {
-        return anterior;
-    }
-
-    public void setAnterior(Andar anterior) {
-        this.anterior = anterior;
-    }
-
-    @Override
-    public String toString() {
-        return "Andar " + numero;
-    }
 }
+

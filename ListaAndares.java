@@ -7,6 +7,7 @@ public class ListaAndares {
         ultimo = null;
     }
 
+    //Insere os andares no fim da lista
     public void inserirFim(Andar novo) {
         if (primeiro == null) {
             primeiro = novo;
@@ -18,15 +19,8 @@ public class ListaAndares {
         }
     }
 
+    //Retorna o primeiro andar
     public Andar getPrimeiro() {
         return primeiro;
-    }
-
-    public void imprimir() {
-        Andar atual = primeiro;
-        while (atual != null) {
-            System.out.println(atual);
-            atual = atual.proximo;
-        }
     }
 }

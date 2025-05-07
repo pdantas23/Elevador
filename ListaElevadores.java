@@ -5,6 +5,7 @@ public class ListaElevadores {
         head = null;
     }
 
+    //Adiciona um elevador a lista
     public void inserir(Elevador elevador) {
         NodeElevador novoNo = new NodeElevador(elevador);
 
@@ -19,6 +20,7 @@ public class ListaElevadores {
         }
     }
 
+    //Retorna o primeiro elevador da lista
     public NodeElevador getInicio() {
         return head;
     }
