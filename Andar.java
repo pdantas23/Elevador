@@ -19,19 +19,22 @@ public class Andar {
         }
     }
 
-    // Getters e Setters
+    //Retorna o andar
     public int getNumero() {
         return numero;
     }
 
+    //Retorna a fila de pessoas aguardando no andar
     public FilaPessoas getPessoasAguardando() {
         return pessoasAguardando;
     }
 
+    //Retorna o painel do elevador
     public PainelElevador getPainel() {
         return painel;
     }
 
+    //Retorna o próximo andar
     public Andar getProximo() {
         return proximo;
     }
