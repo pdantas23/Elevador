@@ -1,7 +1,7 @@
 public class Andar {
     private int numero;
     private FilaPessoas pessoasAguardando;
-    private PainelElevador painel;
+    private PainelExterno painel;
     public Andar proximo;
     public Andar anterior;
 
@@ -9,7 +9,7 @@ public class Andar {
     public Andar(int numero) {
         this.numero = numero;
         this.pessoasAguardando = new FilaPessoas();
-        this.painel = new PainelElevador();
+        this.painel = new PainelExterno(numero);
         this.proximo = null;
         this.anterior = null;
 
@@ -19,25 +19,21 @@ public class Andar {
         }
     }
 
-    //Retorna o andar
+    // Getters e Setters
     public int getNumero() {
         return numero;
     }
 
-    //Retorna a fila de pessoas aguardando no andar
     public FilaPessoas getPessoasAguardando() {
         return pessoasAguardando;
     }
 
-    //Retorna o painel do elevador
-    public PainelElevador getPainel() {
+    public PainelExterno getPainel() {
         return painel;
     }
 
-    //Retorna o próximo andar
     public Andar getProximo() {
         return proximo;
     }
-
 }
 

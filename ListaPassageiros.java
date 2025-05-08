@@ -1,34 +1,50 @@
 public class ListaPassageiros {
     private NodePassageiro inicio;
     private NodePassageiro fim;
+    public int tamanho;
+
+    public int getTamanho() {
+        return tamanho;
+    }
 
     public ListaPassageiros() {
         this.inicio = null;
         this.fim = null;
+        this.tamanho = 0;
     }
 
-    //Funcão desembarque
-    /*public void remover(Passageiro passageiro) {
-        NodePassageiro atual = inicio;
-        NodePassageiro anterior = null;
+    public void remover(NodePassageiro atual) {
+        if (atual == null) return;
 
-        while (atual != null) {
-            if (atual.getPassageiro() == passageiro) {
-                if (anterior == null) {
-                    inicio = atual.getProximo(); // Remove o primeiro nó
-                } else {
-                    anterior.setProximo(atual.getProximo()); // Remove o nó intermediário
-                }
-
-                if (atual == fim) {
-                    fim = anterior; // Se for o último nó, ajusta o ponteiro do fim
-                }
-                return; // Passa a controlar a remoção
+        // Caso a lista tenha apenas um nó
+        if (inicio == fim) {
+            inicio = fim = null; // A lista fica vazia
+        } else {
+            inicio = atual.getProximo(); // Move o início para o próximo nó
+            if (inicio != null) {
+                inicio.setAnterior(null); // Atualiza a referência anterior do novo nó início
             }
-            anterior = atual;
-            atual = atual.getProximo();
         }
-    }*/
+    }
+
+    public void adicionarNoFim(Pessoa pessoa) {
+        if (pessoa == null) {
+            return;
+        } else {
+            Passageiro passageiro = new Passageiro(pessoa);
+            NodePassageiro novo = new NodePassageiro(passageiro);
+            System.out.println("Adicionando Passageiro ID: " + pessoa.getId() + " à lista.");
+
+            if (inicio == null) {
+                inicio = fim = novo;
+            } else {
+                fim.setProximo(novo);
+                novo.setAnterior(fim);
+                fim = novo;
+            }
+        }
+        tamanho++;
+    }
 
     //Primeiro passageiro a embarcar
     public NodePassageiro getInicio() {
@@ -44,7 +60,7 @@ public class ListaPassageiros {
     public void mostrarPassageiros() {
         NodePassageiro atual = inicio;
         while (atual != null) {
-            System.out.println(atual.getPassageiro());
+            System.out.println("ID: " + atual.getPassageiro().getId());
             atual = atual.getProximo();
         }
     }

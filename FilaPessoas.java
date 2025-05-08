@@ -1,25 +1,17 @@
 public class FilaPessoas {
     private NodePessoa inicio;
     private NodePessoa fim;
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
     private int tamanho;
 
     public FilaPessoas() {
         inicio = null;
         fim = null;
         tamanho = 0;
-    }
-
-    //Embarque da pessoa com maior prioridade
-    public NodePessoa removerPessoaComMaiorPrioridade() {
-        if (inicio == null) return null;
-
-        NodePessoa removido = inicio;
-        inicio = inicio.getProximo();
-        if (inicio == null) {
-            fim = null;
-        }
-        tamanho--;
-        return removido;
     }
 
     //Retorna a primeira pessoa da fila
@@ -55,8 +47,15 @@ public class FilaPessoas {
                 }
             }
         }
-
         tamanho++;
+    }
+
+    public void removerInicio() {
+        if (inicio == null) {
+            return; // Se a lista estiver vazia, não faz nada
+        }else{
+            inicio = inicio.getProximo();
+        }
 
     }
 

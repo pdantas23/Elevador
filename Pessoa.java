@@ -57,6 +57,11 @@ public class Pessoa {
         this.dentroElevador = dentroElevador;
     }
 
+    //Retorna o andar de origem
+    public int getAndarOrigem() {
+        return andarOrigem;
+    }
+
     //Retorna a prioridade
     public int getPrioridade() {
         return prioridade;

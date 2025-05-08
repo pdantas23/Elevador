@@ -1,30 +1,21 @@
-public class Passageiro {
-    private int andarDestino;
-    private boolean subindo;
+public class Passageiro extends Pessoa {
 
-
-    public Passageiro(int andarDestino) {
-        this.andarDestino = andarDestino;
-        this.subindo = subindo;
+    public Passageiro(Pessoa pessoa) {
+        super(pessoa.getId(), pessoa.getAndarOrigem(), pessoa.getAndarDestino(), pessoa.getPrioridade());
+        setDentroElevador(true); // Já marca como dentro do elevador
     }
 
-    // Getter para o andar de destino
-    public int getAndarDestino() {
-        return andarDestino;
+    public Pessoa getPessoa() {
+        // Retorna o objeto da classe Pessoa original que o Passageiro representa
+        return new Pessoa(getId(), getAndarOrigem(), getAndarDestino(), getPrioridade());
     }
 
-    // Setter para o andar de destino
-    public void setAndarDestino(int andarDestino) {
-        this.andarDestino = andarDestino;
-    }
 
-    // Getter para saber se o passageiro quer subir ou descer
-    public boolean isSubindo() {
-        return subindo;
-    }
-
-    // Setter para definir a intenção de subir ou descer
-    public void setSubindo(boolean subindo) {
-        this.subindo = subindo;
+    @Override
+    public String toString() {
+        return "Passageiro ID: " + getId() +
+                ", Origem: " + getAndarOrigem() +
+                ", Destino: " + getAndarDestino() +
+                ", Prioridade: " + getPrioridade();
     }
 }
