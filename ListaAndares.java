@@ -18,9 +18,20 @@ public class ListaAndares {
             ultimo = novo;
         }
     }
-
     //Retorna o primeiro andar
     public Andar getPrimeiro() {
         return primeiro;
+    }
+
+    //Metodo para buscar o andar pelo número
+    public Andar getAndarPorNumero(int numero) {
+        Andar atual = primeiro;
+        while (atual != null) {
+            if (atual.getNumero() == numero) {
+                return atual;
+            }
+            atual = atual.getProximo();
+        }
+        return null;  // Se não encontrar o andar
     }
 }

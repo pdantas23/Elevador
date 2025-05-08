@@ -35,5 +35,13 @@ public class Andar {
     public Andar getProximo() {
         return proximo;
     }
+
+    public void setProximo(Andar proximo) {
+        this.proximo = proximo;
+    }
+
+    public Andar getAnterior() {
+        return anterior;
+    }
 }
 

@@ -16,6 +16,7 @@ public class Predio extends EntidadeSimulavel {
 
         for (int i = 0; i < quantidadeElevadores; i++) {
             Elevador e = new Elevador(i + 1);
+            e.setListaAndares(listaAndares);
             centralDeControle.adicionarElevador(e);
         }
     }
@@ -34,5 +35,16 @@ public class Predio extends EntidadeSimulavel {
     //Retorna a central de controle
     public CentralDeControle getCentralDeControle() {
         return centralDeControle;
+    }
+
+    public Andar getAndar(int andarEscolhido) {
+        Andar atual = listaAndares.getPrimeiro();
+        while (atual != null) {
+            if (atual.getNumero() == andarEscolhido) {
+                return atual;
+            }
+            atual = atual.getProximo();
+        }
+        return null; // Caso não encontre o andar
     }
 }

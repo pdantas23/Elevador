@@ -1,31 +1,58 @@
 public class Elevador extends EntidadeSimulavel {
     private int id;
     private int capacidadeMaxima;
-    private int andarAtual;
-    private boolean emMovimento;
-    private boolean lotado;
-    private double tempoChegada;
-    private int gastoDeEnergia;
-    private boolean subindo;
-    private int pessoasEmbarcadas;
+    private Andar andarAtual;
     ListaPassageiros listaPassageiros;
+    ListaAndares listaAndares;
+
+    ListaElevadores listaElevadores;
 
     public Elevador(int id) {
         this.id = id;
         this.capacidadeMaxima = 4;
-        this.andarAtual = 0;
-        this.emMovimento = false;
-        this.lotado = false;
-        this.tempoChegada = 10;
-        this.gastoDeEnergia = 0;
-        this.pessoasEmbarcadas = 0;
         this.listaPassageiros = new ListaPassageiros();
-
     }
 
-    //Retorna o andar atual do elevador
-    public int getAndarAtual() {
-        return andarAtual;
+    public void setListaAndares(ListaAndares listaAndares) {
+        this.listaAndares = listaAndares;
+        this.andarAtual = listaAndares.getPrimeiro(); // Agora é seguro acessar
+    }
+
+    public void setListaElevadores(ListaElevadores listaElevadores) {
+        this.listaElevadores = listaElevadores;
+    }
+
+    public void moverParaAndar(Andar andarDestino) {
+        System.out.println("Elevador " + id + " começando do térreo.");
+
+        // Encontre o andar de destino na lista de andares
+        Andar destino = listaAndares.getAndarPorNumero(andarDestino.getNumero());
+
+        // Laço para mover o elevador até o andar desejado
+        while (andarAtual != destino) {
+            if (andarAtual.getNumero() < andarDestino.getNumero()) {
+                // Movendo o elevador para o próximo andar
+                System.out.println("Elevador " + id + " subindo para o andar " + andarAtual.getNumero());
+                andarAtual = andarAtual.proximo;  // Avança para o próximo andar
+            } else {
+                // Movendo o elevador para o andar anterior
+                System.out.println("Elevador " + id + " descendo para o andar " + andarAtual.getNumero());
+                andarAtual = andarAtual.anterior;  // Retrocede para o andar anterior (caso o destino seja menor)
+            }
+        }
+        andarAtual = destino;
+        System.out.println("Elevador " + id + " chegou ao andar " + andarDestino.getNumero());
+    }
+
+    //Metodo para chamar um elevador aleatorio
+    public Elevador getElevadorAleatorio() {
+        int tamanho = listaElevadores.getTamanho();
+        int elevadorAleatorio = (int) (Math.random() * tamanho);  // Seleciona um elevador aleatório
+        NodeElevador node = listaElevadores.getInicio();
+        for (int i = 0; i < elevadorAleatorio; i++) {
+            node = node.getProximo();
+        }
+        return node.getElevador();
     }
 
     //Metodo para desembarque
@@ -48,8 +75,8 @@ public class Elevador extends EntidadeSimulavel {
     }
 
     //Metodo para embarcar
-    public void embarcarPessoas(Elevador elevador, Andar andar) {
-        FilaPessoas fila = andar.getPessoasAguardando();
+    public void embarcarPessoas(Elevador elevador, Andar andarAtual) {
+        FilaPessoas fila = this.andarAtual.getPessoasAguardando();
         int tentativas = fila.getTamanho(); // controla quantas pessoas vamos verificar
 
         NodePessoa atual = fila.getInicio(); // começa pela primeira pessoa da fila
@@ -79,7 +106,9 @@ public class Elevador extends EntidadeSimulavel {
         }
 
         System.out.println("Embarque finalizado. Total de passageiros embarcados: " + listaPassageiros.getTamanho());
+        this.andarAtual = andarAtual;
     }
+
 
     //Retorna o id do elevador
     public int getId() {
@@ -96,6 +125,7 @@ public class Elevador extends EntidadeSimulavel {
         return listaPassageiros.getInicio() == null;
     }
 
+
     //Verifica se não embarcarão mais pessoas que a capacidade
     private boolean embarcarPessoasMaxima() {
         return listaPassageiros.getTamanho() >= capacidadeMaxima;
@@ -105,5 +135,14 @@ public class Elevador extends EntidadeSimulavel {
     @Override
     public void atualizar(int minutoSimulado) {
         System.out.println("Elevador " + id + " processando minuto " + minutoSimulado);
+    }
+
+    //Retorna o andar atual do elevador
+    public Andar getAndarAtual() {
+        return andarAtual;
+    }
+
+    public void setAndarAtual(Andar proximoAndar) {
+        this.andarAtual = andarAtual;
     }
 }

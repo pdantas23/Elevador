@@ -1,8 +1,10 @@
 public class ListaElevadores {
     private NodeElevador head;
+    public int tamanho;
 
     public ListaElevadores() {
         head = null;
+        tamanho = 0;
     }
 
     //Adiciona um elevador a lista
@@ -18,6 +20,11 @@ public class ListaElevadores {
             }
             atual.proximo = novoNo;
         }
+        tamanho++;
+    }
+
+    public int getTamanho() {
+        return tamanho;
     }
 
     //Retorna o primeiro elevador da lista

@@ -1,8 +1,10 @@
 import java.io.Serializable;
+import java.util.Random;
 
 public class PainelExterno implements Serializable {
     private int andar;
-    private boolean botao; // Andar onde o painel está localizado
+    private boolean botao;
+    ListaElevadores listaElevadores;
 
     // Construtor que inicializa o andar do painel
     public PainelExterno(int numero) {
@@ -11,9 +13,37 @@ public class PainelExterno implements Serializable {
     }
 
     // Metodo que chama o elevador (pressionar o botão)
-    public void pressionarBotao(Elevador elevador) {
-        botao = true;
-        System.out.println("Botão do painel externo pressionado no andar " + andar);
+    public Elevador pressionarBotao(Andar andarDestino, ListaElevadores listaElevadores) {
+        Random random = new Random();
+
+        NodeElevador nodeElevador = listaElevadores.getInicio();
+        int tamanho = listaElevadores.getTamanho();
+
+        if (nodeElevador == null) {
+            System.out.println("Nenhum elevador disponível.");
+            return null;
+        }
+
+        int elevadorEscolhidoIndex = random.nextInt(tamanho);
+        int contador = 0;
+
+        while (nodeElevador != null) {
+            if (contador == elevadorEscolhidoIndex) {
+                Elevador elevadorEscolhido = nodeElevador.getElevador();
+
+                System.out.println("Botão pressionado no andar " + andarDestino.getNumero() +
+                        ". Elevador " + elevadorEscolhido.getId() + " foi chamado.");
+
+                elevadorEscolhido.moverParaAndar(andarDestino);
+                elevadorEscolhido.setAndarAtual(andarDestino); // Atualiza o estado interno do elevador
+
+                return elevadorEscolhido; // <- retorna o elevador usado
+            }
+            nodeElevador = nodeElevador.getProximo();
+            contador++;
+        }
+
+        return null; // caso algo dê errado
     }
 
     // Metodo para retornar o andar do painel

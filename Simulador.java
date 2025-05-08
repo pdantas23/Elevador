@@ -8,12 +8,13 @@ public class Simulador {
 
     //Teste da criação dos andares, elevadores e filas
     public void iniciar() {
+
         // Exibindo andares e suas filas
         System.out.println("Andares e suas filas:");
         Andar andarAtual = predio.getListaAndares().getPrimeiro();
         while (andarAtual != null) {
             System.out.println("- Andar " + andarAtual.getNumero());
-            andarAtual.getPessoasAguardando().exibirFila();
+            andarAtual.getPessoasAguardando().exibirFila();  // Exibindo pessoas aguardando
             andarAtual = andarAtual.getProximo();
         }
 
@@ -25,36 +26,49 @@ public class Simulador {
             elevadorAtual = elevadorAtual.getProximo();
         }
 
-
         // Obtendo o primeiro elevador e o primeiro andar
         NodeElevador elevador1 = predio.getCentralDeControle().getElevadores().getInicio();
         Elevador elevador = elevador1.getElevador();
         Andar primeiroAndar = predio.getListaAndares().getPrimeiro();
-
         System.out.println("\nElevador vazio? " + elevador.estaVazio());
 
-        // Teste de embarque
-        System.out.println("\nIniciando o embarque...");
-        elevador.embarcarPessoas(elevador, primeiroAndar);
-        System.out.println("\nEmbarque concluído!");
+        // Simulação de pressionamento do botão em um andar aleatório
+        int andarEscolhido = (int) (Math.random() * 6) + 3;  // Escolhendo um andar aleatório entre 3 e 9
+        Andar andarDeDestino = predio.getListaAndares().getAndarPorNumero(andarEscolhido);  // Obtendo o objeto Andar
 
-        System.out.println("\nElevador vazio? " + elevador.estaVazio());
+        if (andarDeDestino != null) {
+            PainelExterno painelExterno = andarDeDestino.getPainel();
 
-        // Mostrar os passageiros embarcados
-        System.out.println("\nPessoas embarcadas: ");
-        elevador.listaPassageiros.mostrarPassageiros();
+            // Chamando o elevador através do botão do painel e recebendo o elevador selecionado
+            Elevador elevadorEscolhido = painelExterno.pressionarBotao(andarDeDestino, predio.getCentralDeControle().getElevadores());
 
-        // Determina o próximo andar
-        Andar proximoAndar = predio.getListaAndares().getPrimeiro().getProximo();
+            System.out.println("\nElevador " + elevadorEscolhido.getId() + " foi chamado para o andar " + andarEscolhido);
 
-        // Teste de desembarque no próximo andar
-        System.out.println("\nIniciando o desembarque no próximo andar...");
-        if (elevador1 != null && proximoAndar != null) {
-            elevador1.getElevador().desembarcarPessoas(proximoAndar);  // Desembarca pessoas no próximo andar
+            // Teste de embarque
+            System.out.println("\nIniciando o embarque...");
+            elevadorEscolhido.embarcarPessoas(elevadorEscolhido, elevadorEscolhido.getAndarAtual());
+            System.out.println("\nEmbarque concluído!");
+
+            // Mostrar os passageiros embarcados
+            System.out.println("\nPessoas embarcadas: ");
+            elevadorEscolhido.getListaPassageiros().mostrarPassageiros();
+
+            // Teste de desembarque no próximo andar
+            System.out.println("\nIniciando o desembarque no próximo andar...");
+            Andar proximoAndar = elevadorEscolhido.getAndarAtual().getProximo();
+
+            if (proximoAndar != null) {
+                elevadorEscolhido.setAndarAtual(proximoAndar);  // Atualiza o andar atual para simular o movimento
+                elevadorEscolhido.desembarcarPessoas(proximoAndar);  // Desembarca as pessoas
+            } else {
+                System.out.println("Não há próximo andar para desembarque.");
+            }
+
+            System.out.println("\nDesembarque concluído!");
+            System.out.println("Elevador vazio? " + elevadorEscolhido.estaVazio());
+
+        } else {
+            System.out.println("Erro: andar " + andarEscolhido + " não encontrado.");
         }
-        System.out.println("\nDesembarque concluído!");
-
-        System.out.println("Elevador vazio? " + elevador.estaVazio());
-
     }
 }
